@@ -11,10 +11,13 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Aspect  // AOP에서 Aspect 사용 선언 어노테이션
 public class MyAspect {
 	
+	private static Logger logger = LoggerFactory.getLogger(MyAspect.class);
 	
 	/*
 	 *  # execution 명시자 
@@ -58,21 +61,22 @@ public class MyAspect {
 		
 	}
 	
-	
-	
 	//메소드 호출 전
 	
 	@Before("pointcut()")
 	//@Before("execution(public void com.spring.aop.ClassManager.work())") // 특정 패키지,클래스의 메서드를 지정
 	public void before() {
-		System.out.println("AOP Before 메서드 호출 : 출근한다.");
+	
+		//System.out.println("AOP Before 메서드 호출 : 출근한다.");
+		logger.info("AOP Before 메서드 호출 : 출근한다.");
 	}
 	
 	@After("pointcut()")
 	//메소드 호출 후
 	//@After("execution(* work())")
 	public void after() {		
-		System.out.println("AOP After 메서드 호출 : 퇴근한다.");
+		//System.out.println("AOP After 메서드 호출 : 퇴근한다.");
+		logger.info("AOP After 메서드 호출 : 퇴근한다.");
 	}
 	
 	//////////////////////////////////////////////////////////////
@@ -111,12 +115,20 @@ public class MyAspect {
 	@AfterReturning("execution(* normal(..))")
 	public void afterReturning(JoinPoint jp) {	//JoinPoint를 통해 메소드의 파라미터를 전달받을 수 있다.
 		
-		System.out.println("1 : " + Arrays.toString(jp.getArgs()));   //메소드의 파라미터를 확인
-		System.out.println("2:" + jp.getKind());					// 메서드의 종류
-		System.out.println("3:" + jp.getSignature().getName());	// 어드바이즈메서드에 대한 설명(descrption)이 반환
-		System.out.println("4:" + jp.getTarget().toString());		// 대상 객체를 반환
-		System.out.println("5:" + jp.getThis().toString());		// 프록시 객체를 반환	
-		System.out.println("AOP AfterReturning 메소드 호출 : 정상적으로 업무를 마무리 하였다. \n");
+//		System.out.println("1 : " + Arrays.toString(jp.getArgs()));   //메소드의 파라미터를 확인
+//		System.out.println("2:" + jp.getKind());					// 메서드의 종류
+//		System.out.println("3:" + jp.getSignature().getName());	// 어드바이즈메서드에 대한 설명(descrption)이 반환
+//		System.out.println("4:" + jp.getTarget().toString());		// 대상 객체를 반환
+//		System.out.println("5:" + jp.getThis().toString());		// 프록시 객체를 반환	
+//		System.out.println("AOP AfterReturning 메소드 호출 : 정상적으로 업무를 마무리 하였다. \n");
+//		
+		
+		logger.info("1 : " + Arrays.toString(jp.getArgs()));
+		logger.info("2:" + jp.getKind());
+		logger.info("3:" + jp.getSignature().getName());
+		logger.info("4:" + jp.getTarget().toString());
+		logger.info("5:" + jp.getThis().toString());
+		logger.info("AOP AfterReturning 메소드 호출 : 정상적으로 업무를 마무리 하였다. \n");
 		
 	}
 	
@@ -125,7 +137,8 @@ public class MyAspect {
 	@AfterThrowing("execution(public void com.spring.aop.ClassEmployee.mistake())")
 	public void afterThrowing() {
 		
-		System.out.println("AOP AfterThrowing메소드 호출 : 실수로 보고서를 다른 상사에게 보냈다.");
+		//System.out.println("AOP AfterThrowing메소드 호출 : 실수로 보고서를 다른 상사에게 보냈다.");
+		logger.info("AOP AfterThrowing메소드 호출 : 실수로 보고서를 다른 상사에게 보냈다.");
 	}
 	
 	
